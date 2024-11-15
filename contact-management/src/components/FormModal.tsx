@@ -52,32 +52,30 @@ function FormModal({ open, handleClose }: Props) {
 
   async function addContact(formValues: ContactForm) {
     setLoading(true);
-    const res = await fetch("/api/contacts", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formValues),
-    });
-    const data = await res.json();
-    if (res.ok) {
+    try {
+      const res = await fetch("/api/contacts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formValues),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.message);
+      }
       console.log(data);
       setContacts((list) => [...list, data]);
       handleClose();
-    } else {
-      switch (res.status) {
-        case 500:
-          toast.error("Internal Server Error");
-          break;
-        case 400:
-          toast.error(data.message);
-          break;
-        default:
-          toast.error("Something Went Wrong");
+      setLoading(false);
+    } catch (e) {
+      if (e instanceof Error) {
+        toast.error(e.message);
+      } else {
+        toast.error("Something went wrong");
       }
-      console.log("error : ", data);
+      setLoading(false);
     }
-    setLoading(false);
   }
 
   return (

@@ -64,30 +64,28 @@ function ContactTable() {
     },
   ];
   async function getContacts() {
-    const res = await fetch("/api/contacts", {
-      method: "GET",
-    });
-    const data = await res.json();
-    if (res.ok) {
+    try {
+      const res = await fetch("/api/contacts", {
+        method: "GET",
+      });
+      const data = await res.json();
       setContacts(() => data);
-    } else {
-      switch (res.status) {
-        case 500:
-          toast.error("Internal Server Error");
-          break;
-        case 400:
-          toast.error("Unauthorized request");
-          break;
-        default:
-          toast.error("Something Went Wrong");
-      }
-      console.log("error : ", data.error);
+    } catch (e) {
+      toast.error("Something Went Wrong !");
     }
   }
   async function handleProcessRowUpdate(newRow: Contact) {
     try {
-      console.log("editing row : ", newRow.firstName);
-
+      if (
+        !newRow.firstName ||
+        !newRow.lastName ||
+        !newRow.email ||
+        !newRow.jobTitle ||
+        !newRow.companyName ||
+        !newRow.phoneNumber
+      ) {
+        throw new Error("Fields can not be empty");
+      }
       const response = await fetch(`/api/contacts/${newRow._id}`, {
         method: "PUT",
         headers: {
@@ -103,7 +101,11 @@ function ContactTable() {
 
       return updatedRow;
     } catch (error) {
-      toast.error("Error in updating cell");
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("Error while updating Field");
+      }
       console.error("Failed to update row:", error);
       throw new Error("Could not save changes to the server.");
     }
@@ -117,7 +119,7 @@ function ContactTable() {
       toast.success("Contact deleted successfully!");
     } catch (error) {
       console.error("Failed to delete contact:", error);
-      alert("Failed to delete contact!");
+      toast.error("Failed to delete contact!");
     }
   }
   useEffect(() => {

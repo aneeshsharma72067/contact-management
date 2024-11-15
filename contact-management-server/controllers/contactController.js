@@ -1,4 +1,5 @@
 const Contact = require("../models/contactModel");
+const { validationResult } = require("express-validator");
 
 exports.getAllContacts = async (req, res) => {
   try {
@@ -11,15 +12,28 @@ exports.getAllContacts = async (req, res) => {
 
 exports.createContact = async (req, res) => {
   try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const existingContact = await Contact.findOne({ email: req.body.email });
+    if (existingContact) {
+      return res
+        .status(409)
+        .json({ message: "Contact with this email already exists" });
+    }
+
     const newContact = new Contact(req.body);
     const savedContact = await newContact.save();
     res.status(201).json(savedContact);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res
+      .status(500)
+      .json({ message: "Internal server error", error: error.message });
     console.log(error);
   }
 };
-
 exports.updateContact = async (req, res) => {
   try {
     const updatedContact = await Contact.findByIdAndUpdate(
