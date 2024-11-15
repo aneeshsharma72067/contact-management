@@ -37,7 +37,7 @@ This is the **frontend** of the Contact Management System, built with React and 
 3. Start the development server:
 
    ```bash
-   npm start
+   npm run dev
    ```
 
 4. Open your browser and go to:
@@ -78,4 +78,4 @@ This is the **frontend** of the Contact Management System, built with React and 
 ## **Future Enhancements**
 
 - Add search and filter options to the DataGrid.
-- Implement pagination for better performance with large datasets.
+- Add multiple color themes.

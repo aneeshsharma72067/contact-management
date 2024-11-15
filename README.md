@@ -64,7 +64,7 @@ This app allows users to perform CRUD operations on contact data, including addi
      ```
    - Start the frontend server:
      ```bash
-     npm run start
+     npm run dev
      ```
 
 4. Open your browser and navigate to `http://localhost:3000`.

@@ -45,7 +45,7 @@ This is the **backend** of the Contact Management System, built with Node.js and
 4. Start the server using Nodemon:
 
    ```bash
-   npm run dev
+   npm run start
    ```
 
 5. The server will run at:
