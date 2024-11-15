@@ -31,7 +31,8 @@ function App() {
           gutterBottom
           marginBottom={4}
         >
-          Streamline your contacts and stay organized with ease.
+          Streamline your contacts and stay organized with ease. Double click a
+          cell to start editing data.
         </Typography>
         <FormModal open={open} handleClose={() => setOpen(false)} />
         <Box
