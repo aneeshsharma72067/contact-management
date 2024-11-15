@@ -1,50 +1,81 @@
-# React + TypeScript + Vite
+# Contact Management Client
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the **frontend** of the Contact Management System, built with React and styled using Material-UI (MUI). It provides a user-friendly interface for managing contact data and integrates seamlessly with the backend server.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## **Features**
 
-## Expanding the ESLint configuration
+- Displays contacts in a responsive and interactive data grid.
+- Allows adding, editing, and deleting contacts.
+- Validates form inputs using Formik and Yup.
+- Handles state management using Jotai.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+---
 
-- Configure the top-level `parserOptions` property like this:
+## **How to Run**
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### **Pre-requisites**
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+- Node.js (v14 or higher)
+- npm or yarn installed
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+### **Steps**
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+1. Navigate to the `contact-management-client` directory:
+
+   ```bash
+   cd contact-management-client
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Start the development server:
+
+   ```bash
+   npm start
+   ```
+
+4. Open your browser and go to:
+   ```
+   http://localhost:3000
+   ```
+
+---
+
+## **Tools and Libraries**
+
+- **React**: A component-based UI library.
+- **Vite**: A fast and optimized React development environment.
+- **Material-UI (MUI)**: A library for professional-grade UI components.
+- **Jotai**: A simple state management library.
+- **Formik + Yup**: For form handling and validation.
+
+---
+
+## **How It Works**
+
+1. The app fetches contact data from the backend server (`localhost:5000/api/contacts`).
+2. Contacts are displayed in a MUI DataGrid, allowing inline editing and deletion.
+3. State changes are managed using Jotai to ensure efficient rendering.
+4. Form validation ensures data integrity before sending updates to the server.
+
+---
+
+## **Challenges Faced**
+
+- **State Management:** Handling global state for forms and DataGrid efficiently.
+  - **Solution:** Used Jotai to simplify state management and avoid unnecessary re-renders.
+- **API Integration:** Ensuring smooth communication with the backend.
+  - **Solution:** Used a proxy setup in `vite.config.js` to resolve CORS issues.
+
+---
+
+## **Future Enhancements**
+
+- Add search and filter options to the DataGrid.
+- Implement pagination for better performance with large datasets.
